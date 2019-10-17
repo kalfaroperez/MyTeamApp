@@ -46,30 +46,37 @@ namespace MyTeamApp
         {
             try
             {
-                for (int index = 2; index <= lastRow; index++)
+                bool existe = false;
+                for (int index = 0; index <= EmpList.Count; index++)
                 {
+                    for (int i = 2; i <= lastRow; i++)
+                    {
+
+                    }
                     Array MyValues = (Array)MySheet.get_Range("A" + index.ToString(), "E" + index.ToString()).Cells.Value;
                     if (MyValues.Length > 0)
                     {
-                        string cedula = MyValues.GetValue(1, 3).ToString();
-                        if (cedula == emp.Cedula_ID)
-                        {
-                            MessageBox.Show("La cedula ingresada ya Existe", "Alerta!!..", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        }
-                        else
-                        {
-                            lastRow += 1;
-                            MySheet.Cells[lastRow, 1] = emp.Nombres;
-                            MySheet.Cells[lastRow, 2] = emp.Apellidos;
-                            MySheet.Cells[lastRow, 3] = emp.Cedula_ID;
-                            MySheet.Cells[lastRow, 4] = emp.Candidato;
-                            MySheet.Cells[lastRow, 5] = DateTime.Now;
-                            EmpList.Add(emp);
-                            MyBook.Save();
-                            MessageBox.Show("Details were successfully added to the excel !!", "Success..", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
+                        string cedula = MyValues.GetValue(index, 3).ToString();
+                        if (cedula == emp.Cedula_ID) { existe = true; }
                     }
                 }
+                if (existe)
+                {
+                    MessageBox.Show("La cedula ingresada ya Existe", "Alerta!!..", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else
+                {
+                    lastRow += 1;
+                    MySheet.Cells[lastRow, 1] = emp.Nombres;
+                    MySheet.Cells[lastRow, 2] = emp.Apellidos;
+                    MySheet.Cells[lastRow, 3] = emp.Cedula_ID;
+                    MySheet.Cells[lastRow, 4] = emp.Candidato;
+                    MySheet.Cells[lastRow, 5] = DateTime.Now;
+                    EmpList.Add(emp);
+                    MyBook.Save();
+                    MessageBox.Show("Details were successfully added to the excel !!", "Success..", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
             }
             catch (Exception ex)
             { }
