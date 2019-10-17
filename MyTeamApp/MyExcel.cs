@@ -47,17 +47,13 @@ namespace MyTeamApp
             try
             {
                 bool existe = false;
-                for (int index = 0; index <= EmpList.Count; index++)
+                for (int index = 2; index <= lastRow; index++)
                 {
-                    for (int i = 2; i <= lastRow; i++)
+                    System.Array MyValues = (System.Array)MySheet.get_Range("A" + index.ToString(), "E" + index.ToString()).Cells.Value;
+                    string cedula = MyValues.GetValue(1, 3).ToString();
+                    if (emp.Cedula_ID == cedula)
                     {
-
-                    }
-                    Array MyValues = (Array)MySheet.get_Range("A" + index.ToString(), "E" + index.ToString()).Cells.Value;
-                    if (MyValues.Length > 0)
-                    {
-                        string cedula = MyValues.GetValue(index, 3).ToString();
-                        if (cedula == emp.Cedula_ID) { existe = true; }
+                        existe = true;
                     }
                 }
                 if (existe)
